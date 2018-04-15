@@ -1,94 +1,73 @@
 const fs = require('fs')
 const path = require('path')
+const categories = require('./categories.js')
+const getDirs = require('./get-dirs.js')
 const excludes = ['.git', 'node_modules']
-const categories = require('./categories.js');
-const primaries = {
-  development: ['projects', 'learning', 'challenges']
-}
-
-let types = {
-  files: [],
-  taggedDirs: [],
-  untaggedDirs: []
-}
 
 const init = (categories) => {
-  let dirs
+  const report = {
+    count: 0,
+    orphans: {
+      files: [],
+      count: 0
+    },
+    untrackedProjects: {
+      files: [],
+      count: 0
+    },
+    trackedProjects: {
+      files: [],
+      count: 0
+    }
+  }
+
+  // Get Data For Dirs
+  let dirs = {}
   for (const category in categories) {
-    dirs = getDirs(categories[category], category, 0)
-    // dirs.untaggedDirs = dirs.untaggedDirs.filter(dir => {
-    //   let splitDir = dir.split(categories[category])
-    //   console.log(splitDir.split('/'))
-    //   if (splitDir.split('/')) {
-    // 
-    //   } else {
-    //     return dir
-    //   }
-    // })
-  }
-  console.log(dirs);
-
-}
-
-const getDirs = (dir, category, depth) => {
-  if (depth === 5) {
-    return 'Maximum depth reached'
+    dirs[category] = []
+    dirs[category].push(getDirs(categories[category], category))
   }
 
-  const files = fs.readdirSync(dir)
-  for (const file in files) {
+  // See Which Directories Have Orphans 
+  Object.keys(dirs).forEach(dir => {
+    dirs[dir].forEach(item => {
+      item['orphans'].forEach(orphan => {
+        report['orphans']['files'].push(orphan)
+        report['orphans']['count'] += 1
+        report.count++
+      })
 
-    if (files[file] == '.tags') {
-      if (types.untaggedDirs.includes(dir)) {
-        types.untaggedDirs.splice(types.untaggedDirs.indexOf(dir, 1))
-      }
-      types.taggedDirs.push(dir)
-      break
-    }
-
-    let stats = fs.statSync(`${dir}/${files[file]}`)
-    if (stats.isDirectory() && !excludes.includes(files[file])) {
-      if (isChildOfPrimary(dir, category)) {
-        types.untaggedDirs.push(`${dir}/${files[file]}`)
-        console.log(`Child of Primary: ${dir}/${files[file]}`);
-        return
-      } else {
-        if (types.untaggedDirs.includes(dir)) {
-          types.untaggedDirs.pop()
+      // Categorize Un-"Directory"-ized files that belong to primaries as orphans
+      Object.keys(item).forEach(primary => {
+        if (primary !== 'orphans') {
+          
+          if (item[primary]['files']) {
+            item[primary]['files'].forEach(primaryOrphan => {
+              report['orphans']['files'].push(primaryOrphan.filePath)
+              report['orphans']['count']++
+              report.count++
+            })
+          }
+          
+          // Sort Tracked and Untracked Projects
+          if (item[primary]['dirs']) {
+            item[primary]['dirs'].forEach(dir => {
+              if (dir.isTagged) {
+                report['trackedProjects']['files'].push(dir)
+                report['trackedProjects']['count']++
+                report.count++
+              } else {
+                report['untrackedProjects']['files'].push(dir)
+                report['untrackedProjects']['count']++
+                report.count++
+              }
+            })
+          }
         }
-        types.untaggedDirs.push(`${dir}/${files[file]}`)
-        getDirs(`${dir}/${files[file]}`, category, depth++)
-      }
-    }
-  }
-
-  return types
-}
-
-const isChildOfPrimary = (dir, category) => {
-  let fullPrimaryPaths = createPrimaryPaths(category)
-  if (fullPrimaryPaths.length < 1) {
-    return false
-  } else if (fullPrimaryPaths.includes(dir)) {
-    return false
-  }
-
-
-  const splitChild = dir.split('/')
-  console.log(primaries[category]);
-  console.log(splitChild[splitChild.length - 1]);
-  if (primaries[category].includes(splitChild[splitChild.length - 1])) {
-    return true
-  }
-  return false
-}
-
-const createPrimaryPaths = (category) => {
-  let fullPrimaryPaths = []
-  for (const primary in primaries[category]) {
-    fullPrimaryPaths.push(`${categories[category]}/${primaries[category][primary]}`)
-  }
-  return fullPrimaryPaths
+      })
+    })
+  })
+  // console.log(JSON.stringify(report, null, '\t'));
 }
 
 init(categories)

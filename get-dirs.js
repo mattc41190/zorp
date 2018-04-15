@@ -12,6 +12,13 @@ const getDirs = function getDirs(dir, category) {
     .filter(file => isDir(dir, file) && !file.startsWith('.'))
     .map(file => path.join(dir, file))
 
+  // Get Orphans
+  const orphans = fs.readdirSync(dir)
+    .filter(file => !primaries.includes(`${dir}/${file}`) && !file.startsWith('.'))
+    .map(file => path.join(dir, file))
+  
+  data['orphans'] = orphans
+
   // Get Children of Each Sub-Topic And Categorize Them
   primaries.forEach((primary) => {
     const children = fs.readdirSync(primary)
@@ -20,19 +27,19 @@ const getDirs = function getDirs(dir, category) {
       if (isDir(primary, child)) {
         data[title] = data[title] || {}
         data[title]['dirs'] = data[title]['dirs'] || []
-        data[title]['dirs'].push({title: child, isTagged: isTagged(primary, child)})
+        data[title]['dirs'].push({title: child, filePath: path.join(primary, child), isTagged: isTagged(primary, child)})
       } else if (isFile(primary, child)) {
         data[title] = data[title] || {}
         data[title]['files'] = data[title]['files'] || []
-        data[title]['files'].push(child)
+        data[title]['files'].push({title: child, filePath: path.join(primary, child)})
       } else {
         console.error(`Item at ${child} is neither file or directory`)
       }
     })
   })
   
-  console.log(JSON.stringify(data, null, '\t'));
-
+  // console.log(JSON.stringify(data, null, '\t'));
+  return data
 }
 
 // Safely Confirm File is a Dir
