@@ -1,23 +1,19 @@
 {
   "name": "tag-finder",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tags that help you organize",
   "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
   "scripts": {
-    "test": "nyc --reporter=html mocha",
-    "report": "node reporter/create.js",
     "start": "node index.js && npm run report",
-    "lint": "eslint **.js"
+    "test": "npm run lint && npm run unit",
+    "lint": "eslint **.js",
+    "unit": "nyc --reporter=html mocha",
+    "report": "node reporter/create.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["organization", "organize" "tags", "files", "folders"],
+  "author": "Matthew Cale",
   "license": "ISC",
   "dependencies": {
-    "handlebars": "^4.0.11",
-    "mustache": "^2.3.0",
     "pug": "^2.0.3"
   },
   "devDependencies": {
