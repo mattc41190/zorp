@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 
-const DIR = '/Users/mattcale/Desktop/Development'
-
 const getDirs = function getDirs(dir, category) {
   // Initialize Return Value
   const data = {}
@@ -27,18 +25,29 @@ const getDirs = function getDirs(dir, category) {
       if (isDir(primary, child)) {
         data[title] = data[title] || {}
         data[title]['dirs'] = data[title]['dirs'] || []
-        data[title]['dirs'].push({title: child, filePath: path.join(primary, child), isTagged: isTagged(primary, child)})
-      } else if (isFile(primary, child)) {
+        data[title]['dirs'].push({
+          title: child, 
+          filePath: path.join(primary, child), 
+          isTagged: isTagged(primary, child),
+          category: category,
+          primary: title
+        })
+      } else if (isFile(primary, child) && !child.startsWith('.')) {
         data[title] = data[title] || {}
         data[title]['files'] = data[title]['files'] || []
-        data[title]['files'].push({title: child, filePath: path.join(primary, child)})
+        data[title]['files'].push({
+          title: child, 
+          filePath: path.join(primary, child),
+          category: category,
+          primary: title
+        })
       } else {
+        /* istanbul ignore next */
         console.error(`Item at ${child} is neither file or directory`)
       }
     })
   })
   
-  // console.log(JSON.stringify(data, null, '\t'));
   return data
 }
 
@@ -47,7 +56,8 @@ const isDir = function isDir(dir, file = '') {
   try {
     return fs.statSync(path.join(dir, file)).isDirectory()
   } catch (e) {
-    console.log(e);
+    /* istanbul ignore next */
+    console.log(e)
   }
 }
 
@@ -56,7 +66,8 @@ const isFile = function isFile(dir, file = '') {
   try {
     return fs.statSync(path.join(dir, file)).isFile()
   } catch (e) {
-    console.log(e);
+    /* istanbul ignore next */
+    console.log(e)
   }
 }
 
@@ -68,9 +79,5 @@ const isTagged = function isTagged(dir, file = '') {
   }
   return false
 }
-
-// TEST
-getDirs(DIR, 'development')
-
 
 module.exports = getDirs

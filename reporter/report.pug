@@ -3,23 +3,53 @@ html
     title Report
     link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4", crossorigin="anonymous")
   body
-    h2 Total Tracked Items:
-    p #{count}
-    h2 Orphans:
-    h3 Total Orphans:
-    p #{orphans.count}
-    h3 Files:
-    each file in orphans.files
-      p #{file}
-    h2 Untracked Projects:
-    h3 Total Untracked Projects:
-    p #{untrackedProjects.count}
-    h3 Files:
-    each file in untrackedProjects.files
-      p #{file.filePath}
-    h2 Tracked Projects:
-    h3 Total Tracked Projects:
-    p #{trackedProjects.count}
-    h3 Files:
-    each file in trackedProjects.files
-      p #{file.filePath}
+    .container
+      .jumbotron
+        h1 Files Report
+      .card
+        .card-header
+          h3.text-center Grade
+        .card-body
+          h1.text-center #{letterGrade}
+        .card-footer
+      br
+      .card
+        .card-header
+          h3.text-center Score
+        .card-body
+          h1.text-center #{grade}%
+        .card-footer 
+
+      br
+      .card
+        .card-header
+          h3.text-center Total Tracked Items
+        .card-body
+          h1.text-center #{count}
+      br
+      .card
+        .card-header
+          h3.text-center Orphans
+        .card-body
+          h1.text-center #{orphans.count}
+          ul.list-group
+          each file in orphans.files
+            li.list-group-item.list-group-item-danger #{file} |  -10
+      br
+      .card
+        .card-header
+          h3.text-center Untracked Projects
+        .card-body
+          h1.text-center #{untrackedProjects.count}
+          ul.list-group
+          each file in untrackedProjects.files
+            li.list-group-item.list-group-item-warning #{file.filePath}
+      br
+      .card
+        .card-header
+          h3.text-center Tracked Projects
+        .card-body
+          h1.text-center #{trackedProjects.count}
+          ul.list-group
+          each file in trackedProjects.files
+            li.list-group-item.list-group-item-success #{file.filePath}

@@ -1,12 +1,13 @@
 const fs = require('fs')
 const path = require('path')
-const categories = require('./categories.js')
-const getDirs = require('./get-dirs.js')
-const excludes = ['.git', 'node_modules']
+const categories = require('./app/conf/categories.js')
+const getDirs = require('./app/get-dirs.js')
+const getScore = require('./app/get-score.js')
 
 const init = (categories) => {
   const report = {
     count: 0,
+    score: 0,
     orphans: {
       files: [],
       count: 0
@@ -34,6 +35,7 @@ const init = (categories) => {
       item['orphans'].forEach(orphan => {
         report['orphans']['files'].push(orphan)
         report['orphans']['count'] += 1
+        report.score += getScore(null, 'orphan', null, null)
         report.count++
       })
 
@@ -45,6 +47,7 @@ const init = (categories) => {
             item[primary]['files'].forEach(primaryOrphan => {
               report['orphans']['files'].push(primaryOrphan.filePath)
               report['orphans']['count']++
+              report.score += getScore(null, 'orphan', null, null)
               report.count++
             })
           }
@@ -55,10 +58,13 @@ const init = (categories) => {
               if (dir.isTagged) {
                 report['trackedProjects']['files'].push(dir)
                 report['trackedProjects']['count']++
+                report.score += getScore(dir.filePath, 'untracked', dir.category, dir.primary)
                 report.count++
+
               } else {
                 report['untrackedProjects']['files'].push(dir)
                 report['untrackedProjects']['count']++
+                report.score += getScore(dir.filePath, 'untracked', null, null)
                 report.count++
               }
             })
@@ -67,7 +73,8 @@ const init = (categories) => {
       })
     })
   })
-  // console.log(JSON.stringify(report, null, '\t'));
+
+  fs.writeFileSync(`${path.join(__dirname, 'reporter', 'report.json')}`, JSON.stringify(report))
 }
 
 init(categories)
