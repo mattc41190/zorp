@@ -3,14 +3,23 @@
   "version": "1.0.0",
   "description": "Tags that help you organize",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js && npm run report",
-    "test": "npm run lint && npm run unit",
-    "lint": "eslint **.js",
-    "unit": "nyc --reporter=html mocha",
-    "report": "node reporter/create.js"
+  "standard": {
+    "env": ["mocha"]
   },
-  "keywords": ["organization", "organize" "tags", "files", "folders"],
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm run lint && npm run unit",
+    "lint": "standard",
+    "format": "standard --fix",
+    "unit": "nyc --reporter=html mocha"
+  },
+  "keywords": [
+    "organization",
+    "organize",
+    "tags",
+    "files",
+    "folders"
+  ],
   "author": "Matthew Cale",
   "license": "ISC",
   "dependencies": {
@@ -18,9 +27,9 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "eslint": "^4.19.1",
     "mocha": "^5.1.0",
     "mock-fs": "^4.4.2",
-    "nyc": "^11.6.0"
+    "nyc": "^11.6.0",
+    "standard": "^11.0.1"
   }
 }

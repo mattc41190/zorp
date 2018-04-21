@@ -1,7 +1,5 @@
-const mock = require('mock-fs')
-
 const orphansOnly = {
-  "__path__": {
+  '__path__': {
     '__orphansOnly__': {
       'orphansOnly.md': 'I am a lonely orphan file'
     }
@@ -9,7 +7,7 @@ const orphansOnly = {
 }
 
 const untrackedOnly = {
-  "__topic__": {
+  '__topic__': {
     '__sub-topic__': {
       'untracked-project': {
         'index.js': 'I am not a mature project yet'
@@ -19,7 +17,7 @@ const untrackedOnly = {
 }
 
 const trackedOnly = {
-  "__topic__": {
+  '__topic__': {
     '__sub-topic__': {
       'tracked-project': {
         'index.js': 'I am a very mature project',
@@ -30,7 +28,7 @@ const trackedOnly = {
 }
 
 const fileAtProjectLevel = {
-  "__topic__": {
+  '__topic__': {
     '__sub-topic__': {
       'index.js': 'I am not a mature project yet'
     }

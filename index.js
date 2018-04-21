@@ -1,10 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const categories = require('./app/conf/categories.js')
-const getDirs = require('./app/get-dirs.js')
-const getScore = require('./app/get-score.js')
+const getDirs = require('./app/get-dirs')
+const getScore = require('./app/get-score')
+const createReport = require('./reporter/create')
 
-const init = (categories) => {
+const init = (categories, create) => {
   const report = {
     count: 0,
     score: 0,
@@ -26,10 +24,10 @@ const init = (categories) => {
   let dirs = {}
   for (const category in categories) {
     dirs[category] = []
-    dirs[category].push(getDirs(categories[category], category))
+    dirs[category].push(getDirs(categories[category].filePath, category))
   }
 
-  // See Which Directories Have Orphans 
+  // See Which Directories Have Orphans
   Object.keys(dirs).forEach(dir => {
     dirs[dir].forEach(item => {
       item['orphans'].forEach(orphan => {
@@ -42,7 +40,6 @@ const init = (categories) => {
       // Categorize Un-"Directory"-ized files that belong to primaries as orphans
       Object.keys(item).forEach(primary => {
         if (primary !== 'orphans') {
-          
           if (item[primary]['files']) {
             item[primary]['files'].forEach(primaryOrphan => {
               report['orphans']['files'].push(primaryOrphan.filePath)
@@ -51,16 +48,15 @@ const init = (categories) => {
               report.count++
             })
           }
-          
+
           // Sort Tracked and Untracked Projects
           if (item[primary]['dirs']) {
             item[primary]['dirs'].forEach(dir => {
               if (dir.isTagged) {
                 report['trackedProjects']['files'].push(dir)
                 report['trackedProjects']['count']++
-                report.score += getScore(dir.filePath, 'untracked', dir.category, dir.primary)
+                report.score += getScore(dir.filePath, 'tracked', dir.category, dir.primary, categories[dir.category].rules)
                 report.count++
-
               } else {
                 report['untrackedProjects']['files'].push(dir)
                 report['untrackedProjects']['count']++
@@ -74,7 +70,7 @@ const init = (categories) => {
     })
   })
 
-  fs.writeFileSync(`${path.join(__dirname, 'reporter', 'report.json')}`, JSON.stringify(report))
+  if (create) { createReport(report) }
 }
 
-init(categories)
+module.exports = init

@@ -1,8 +1,8 @@
-const fs = require('fs')  
+const fs = require('fs')
 const path = require('path')
 const pug = require('pug')
-const report = require('./report.json')
-const potential = (report['untrackedProjects']['count'] + report['trackedProjects']['count']) * 100 
+
+const getPotential = (tracked, untracked) => (tracked + untracked) * 100
 
 const getGrade = (potential, score) => {
   if (score <= 0) {
@@ -15,24 +15,22 @@ const getLetterGrade = (score) => {
   switch (score) {
     case score >= 90:
       return 'A'
-      break
     case score >= 80:
       return 'B'
-      break
     case score >= 70:
       return 'C'
-      break
     default:
       return 'F'
   }
 }
 
-report['potentialScore'] = potential
-report['grade'] = getGrade(potential, report['score'])
-report['letterGrade'] = getLetterGrade(report['score'])
+const createReport = function createReport (report) {
+  const potential = getPotential(report['untrackedProjects']['count'], report['trackedProjects']['count'])
+  report['potentialScore'] = potential
+  report['grade'] = getGrade(potential, report['score'])
+  report['letterGrade'] = getLetterGrade(report['score'])
+  const html = pug.renderFile(path.join(__dirname, './report.pug'), report)
+  fs.writeFileSync(path.join(__dirname, './index.html'), html)
+}
 
-const generate = pug.compileFile(path.join(__dirname, './report.pug'))
-
-const html = generate(report)
-
-fs.writeFileSync(path.join(__dirname, './index.html'), html)
+module.exports = createReport

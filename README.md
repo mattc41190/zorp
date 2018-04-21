@@ -19,7 +19,7 @@ I use my computer quite a bit. As such I create a lot of data in the form of fil
 
 ## How can I use this?
 
-Right now, you can't. It's not very flexible yet.
+I regret to inform you that as of right now, you can't. It's not very flexible. You are, of course, welcome to play around with the source and make it yours, but it is not intended for widespread consumption yet.
 
 ## How do I make this?
 
