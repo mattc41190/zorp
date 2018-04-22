@@ -1,14 +1,17 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 
 // create report html file
-global._root = path.resolve(__dirname)
-require('../app/zorp')(require('../conf/categories'), true)
+const getReport = (initialLoad) => {
+  global._root = path.resolve(__dirname)
+  return require('../app/zorp')(require('../conf/categories'), initialLoad)
+}
 
 let win
 
 function createWindow () {
+  let report = getReport(true)
   // Create the browser window.
   win = new BrowserWindow({width: 800, height: 600})
 
@@ -36,4 +39,13 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
+})
+
+ipcMain.on('refresh', () => {
+  const report = getReport(true)
+  win.loadURL(url.format({
+    pathname: path.join(__dirname, './index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
 })

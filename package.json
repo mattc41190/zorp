@@ -11,7 +11,6 @@
   },
   "scripts": {
     "start": "electron .",
-    "app": "npm start && electron main.js",
     "test": "npm run lint && npm run unit",
     "lint": "standard",
     "format": "standard --fix",

@@ -2,6 +2,28 @@ const getDirs = require('./get-dirs')
 const getScore = require('./get-score')
 const createReport = require('./reporter/create')
 
+const getPotential = (tracked, untracked) => (tracked + untracked) * 100
+
+const getGrade = (potential, score) => {
+  if (score <= 0) {
+    return 0
+  }
+  return parseInt((score / potential) * 100)
+}
+
+const getLetterGrade = (score) => {
+  switch (score) {
+    case score >= 90:
+      return 'A'
+    case score >= 80:
+      return 'B'
+    case score >= 70:
+      return 'C'
+    default:
+      return 'F'
+  }
+}
+
 const init = (categories, create) => {
   const report = {
     count: 0,
@@ -70,7 +92,14 @@ const init = (categories, create) => {
     })
   })
 
-  if (create) { createReport(report) }
+  const potential = getPotential(report['untrackedProjects']['count'], report['trackedProjects']['count'])
+  report['potentialScore'] = potential
+  report['grade'] = getGrade(potential, report['score'])
+  report['letterGrade'] = getLetterGrade(report['score'])
+
+  if (create) { return createReport(report) }
+
+  return report
 }
 
 module.exports = init
