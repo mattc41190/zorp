@@ -1,7 +1,7 @@
 {
-  "name": "tag-finder",
+  "name": "zorp",
   "version": "1.0.0",
-  "description": "Tags that help you organize",
+  "description": "Tags that help you organize it",
   "main": "index.js",
   "standard": {
     "env": ["mocha"]
