@@ -2,7 +2,8 @@
   "name": "zorp",
   "version": "1.0.0",
   "description": "Tags that help you organize it",
-  "main": "index.js",
+  "main": "bin/zorp.js",
+  "bin": "bin/zorp.js",
   "standard": {
     "env": ["mocha"]
   },
