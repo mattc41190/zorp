@@ -24,7 +24,7 @@ const getLetterGrade = (score) => {
   }
 }
 
-const createReport = function createReport (report) {
+const createReport = (report) => {
   const potential = getPotential(report['untrackedProjects']['count'], report['trackedProjects']['count'])
   report['potentialScore'] = potential
   report['grade'] = getGrade(potential, report['score'])
