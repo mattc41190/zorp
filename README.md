@@ -1,6 +1,6 @@
 # zorp
 
-!["zorp"](resources/zorp.jpg)
+!["zorp"](resources/zorp-sm.png)
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
