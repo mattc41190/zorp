@@ -6,6 +6,10 @@ html
     .container
       .jumbotron
         h1 Files Report
+      .row
+        .col 
+          button.btn.btn-primary.btn-block#refresh Refresh
+      br
       .card
         .card-header
           h3.text-center Grade
@@ -53,3 +57,4 @@ html
           ul.list-group
           each file in trackedProjects.files
             li.list-group-item.list-group-item-success #{file.filePath}
+  script(src="./render.js")
