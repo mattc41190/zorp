@@ -1,5 +1,5 @@
-const getDirs = require('./app/get-dirs')
-const getScore = require('./app/get-score')
+const getDirs = require('./get-dirs')
+const getScore = require('./get-score')
 const createReport = require('./reporter/create')
 
 const init = (categories, create) => {

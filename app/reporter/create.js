@@ -30,7 +30,7 @@ const createReport = (report) => {
   report['grade'] = getGrade(potential, report['score'])
   report['letterGrade'] = getLetterGrade(report['score'])
   const html = pug.renderFile(path.join(__dirname, './report.pug'), report)
-  fs.writeFileSync(path.join(__dirname, './index.html'), html)
+  fs.writeFileSync(path.join(global._root, './index.html'), html)
 }
 
 module.exports = createReport

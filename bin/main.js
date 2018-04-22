@@ -2,6 +2,10 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
+// create report html file
+global._root = path.resolve(__dirname)
+require('../app/zorp')(require('../conf/categories'), true)
+
 let win
 
 function createWindow () {
@@ -10,7 +14,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, '/reporter/index.html'),
+    pathname: path.join(__dirname, './index.html'),
     protocol: 'file:',
     slashes: true
   }))

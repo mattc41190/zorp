@@ -2,15 +2,15 @@
   "name": "zorp",
   "version": "1.0.0",
   "description": "Tags that help you organize it",
-  "main": "bin/zorp.js",
-  "bin": "bin/zorp.js",
+  "main": "bin/main.js",
+  "bin": "bin/main.js",
   "standard": {
     "env": [
       "mocha"
     ]
   },
   "scripts": {
-    "start": "node .",
+    "start": "electron .",
     "app": "npm start && electron main.js",
     "test": "npm run lint && npm run unit",
     "lint": "standard",
