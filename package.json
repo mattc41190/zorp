@@ -11,7 +11,10 @@
     "test": "npm run lint && npm run unit",
     "lint": "standard",
     "format": "standard --fix",
-    "unit": "nyc --reporter=html mocha"
+    "unit": "nyc --reporter=html mocha",
+    "patch": "npm version patch && npm publish",
+    "minor": "npm version minor && npm publish",
+    "major": "npm version major && npm publish"
   },
   "keywords": [
     "organization",
