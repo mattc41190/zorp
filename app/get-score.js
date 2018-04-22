@@ -14,17 +14,21 @@ const getScore = (_path, type, category, subcategory, rules) => {
 const calculateHealthScore = (_path, category, subcategory, rules) => {
   let total = 80
   if (rules) {
-    const tags = JSON.parse(fs.readFileSync(`${_path}/.tags`))
-    for (const rule in rules) {
-      let pass = rules[rule].validator(tags)
-      if (!pass) {
-        total -= rules[rule].deduction
-        if (total <= 0) {
-          return 0
+    try {
+      const tags = JSON.parse(fs.readFileSync(`${_path}/.tags`))
+      for (const rule in rules) {
+        let pass = rules[rule].validator(tags)
+        if (!pass) {
+          total -= rules[rule].deduction
+          if (total <= 0) {
+            return 0
+          }
         }
       }
+      return total
+    } catch (e) {
+      return total
     }
-    return total
   }
   return total
 }
