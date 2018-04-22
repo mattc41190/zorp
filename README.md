@@ -3,6 +3,8 @@
 
 !["so-its-together"](resources/together.gif)
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 ## What is this?
 
 __tag-finder__ is a program that grades the health of a set of folders 1 - ∞ based on rules you provide. It is highly opinionated as to what the basic path to your projects are and where your metadata / `.tag` files is. As far as what rules constitute health within those folder it is entirely indifferent. In __tag-finder__ you must adhere to the following structure: 
