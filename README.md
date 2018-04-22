@@ -1,4 +1,5 @@
 # zorp
+## Organize it
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
@@ -16,8 +17,6 @@ The `.tags` file may contain anything you want it to. By adding data to this fil
 
 I use my computer quite a bit. As such I create a lot of data in the form of files and folders. I found that keeping things organized was a bit tedious and that even if I got a burst of energy to create some system of organization it quickly decayed as I couldn't remember the complicated system that I had created. I would organize meal plans one way, coding projects written in java another way, school loans, health records, and tax info another way still. I have probably made 3 or 4 different methods of organizing things and even written down how to use the system, but nevertheless as time went on I would let the system decay. So in an effort to keep organization a first class citizen on my computer I have decided to automate that system. Hopefully by having a constant reminder and a goal I can work my way up to having a consistent and clean feel to my computer.  
 
-!["so-its-together"](resources/together.gif)
-
 ## How can I use this?
 
 I regret to inform you that as of right now, you can't. It's not very flexible. You are, of course, welcome to play around with the source and make it yours, but it is not intended for widespread consumption yet.
@@ -27,3 +26,9 @@ I regret to inform you that as of right now, you can't. It's not very flexible. 
 `git clone <this-repo>`
 
 `npm install`
+
+## Final Thoughts 
+
+Whether you decide to try zorp or not, please get your shit together.
+
+!["so-its-together"](resources/together.gif)
