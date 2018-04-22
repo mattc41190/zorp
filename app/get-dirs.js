@@ -43,7 +43,7 @@ const getDirs = (dir, category) => {
         })
       } else {
         /* istanbul ignore next */
-        console.error(`Item at ${child} is neither file or directory`)
+        console.error(`Item at ${primary}/${child} is neither file or directory`)
       }
     })
   })
