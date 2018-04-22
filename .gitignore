@@ -1,4 +1,5 @@
 .nyc_output
+reporter/index.html
 node_modules
 coverage
 conf
