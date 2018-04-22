@@ -1,7 +1,7 @@
 const expect = require('chai').expect
 const mock = require('mock-fs')
-const mocks = require('./fixtures/get-dirs.mocks.js')
-const getDirs = require('../app/get-dirs.js')
+const mocks = require('./fixtures/get-dirs/get-dirs.mocks')
+const getDirs = require('../app/get-dirs')
 
 describe('#getDirs', () => {
   it('adds floating files to orphans array', () => {
