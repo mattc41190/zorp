@@ -1,1 +1,1 @@
-require('../index.js')(require('../conf/categories.js'), true)
+require('../index')(require('../conf/categories'), true)
