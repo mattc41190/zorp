@@ -10,9 +10,9 @@ __zorp__ is a program that grades the health of a set of folders 1 - ∞ based o
 
 `topic/sub-topic/<your-project>` 
 
-If you want __zorp__ to track your project's health you must also supply a `.tag` file inside of `<your-project>`.
+If you want __zorp__ to track your project's health you must also supply a `.tags` file inside of `<your-project>`.
 
-The `.tag` file may contain anything you want it to. By adding data to this file you allow the report creator to gauge the health and maturity of your project. When your folders are adhering to the rules you define you are able to quickly find everything on your system.
+The `.tags` file may contain anything you want it to. By adding data to this file you allow the report creator to gauge the health and maturity of your project. When your folders are adhering to the rules you define you are able to quickly find everything on your system.
 
 ## Why make this?
 

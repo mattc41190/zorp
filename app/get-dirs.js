@@ -74,7 +74,7 @@ const isFile = function isFile (dir, file = '') {
 // Check Tag Status Of Child
 const isTagged = function isTagged (dir, file = '') {
   const files = fs.readdirSync(path.join(dir, file))
-  if (files.includes('.tags')) {
+  if (files.includes('.tag')) {
     return true
   }
   return false
