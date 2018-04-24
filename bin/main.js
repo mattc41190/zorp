@@ -1,26 +1,36 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
+const isEqual = require('lodash.isequal')
 const path = require('path')
 const url = require('url')
 
-// create report html file
 const getReport = (initialLoad) => {
-  global._root = path.resolve(__dirname)
-  return require('../app/zorp')(require('../conf/categories'), initialLoad)
+  global._root = path.resolve(__dirname, '..')
+  return require('../src/zorp')(require('../conf/categories'), initialLoad)
 }
 
 let win
+let report
 
 function createWindow () {
-  let report = getReport(true)
-  // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600})
+  report = getReport(true)
+  win = new BrowserWindow({
+    width: 400,
+    height: 650,
+    titleBarStyle: 'hidden',
+    transparent: true,
+    frame: false,
+    toolbar: false
+  })
 
-  // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, './index.html'),
+    pathname: path.join(global._root, './client/index.html'),
     protocol: 'file:',
     slashes: true
   }))
+
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.send('report', report)
+  })
 
   win.on('closed', () => {
     win = null
@@ -42,10 +52,19 @@ app.on('activate', () => {
 })
 
 ipcMain.on('refresh', () => {
-  const report = getReport(true)
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, './index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  const currentReport = getReport(true)
+
+  if (!isEqual(currentReport, report)) {
+    win.loadURL(url.format({
+      pathname: path.join(global._root, './client/index.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('report', report)
+    })
+
+    report = currentReport
+  }
 })
