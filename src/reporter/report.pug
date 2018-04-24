@@ -1,0 +1,62 @@
+html
+  head
+    title Report
+    link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4", crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js")
+
+  body(style="-webkit-app-region: drag; background: rgba(33, 37, 41, 0.95);")
+    .container(style="padding:25px")
+      h2.text-center.text-white.font-weight-light(style="padding:0") Zorp
+      .row 
+        .col 
+          .chart-container
+            canvas.chart
+      br
+      .card.text-white.bg-dark
+        .card-header
+          h3.text-center.font-weight-light Grade
+        .card-body
+          h1.text-center.font-weight-light #{letterGrade}
+        .card-footer
+      br
+      .card.text-white.bg-dark
+        .card-header
+          h3.text-center.font-weight-light Score
+        .card-body
+          h1.text-center.font-weight-light #{grade}%
+        .card-footer 
+
+      br
+      .card.text-white.bg-dark
+        .card-header
+          h3.text-center.font-weight-light Total Tracked Items
+        .card-body
+          h1.text-center.font-weight-light #{count}
+      br
+      .card.text-white.bg-dark
+        .card-header
+          h3.text-center.font-weight-light Orphans
+        .card-body
+          h1.text-center.font-weight-light #{orphans.count}
+          ul.list-group
+          each file in orphans.files
+            li.list-group-item.list-group-item-danger.font-weight-light #{file} |  -10
+      br
+      .card.text-white.bg-dark        
+        .card-header
+          h3.text-center.font-weight-light Untracked Projects
+        .card-body
+          h1.text-center.font-weight-light #{untrackedProjects.count}
+          ul.list-group
+          each file in untrackedProjects.files
+            li.list-group-item.list-group-item-warning.font-weight-light #{file.filePath}
+      br
+      .card.text-white.bg-dark
+        .card-header
+          h3.text-center.font-weight-light Tracked Projects
+        .card-body
+          h1.text-center.font-weight-light #{trackedProjects.count}
+          ul.list-group
+          each file in trackedProjects.files
+            li.list-group-item.list-group-item-success.font-weight-light #{file.filePath}
+  script(src="./render.js")

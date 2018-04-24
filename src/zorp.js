@@ -97,7 +97,7 @@ const init = (categories, create) => {
   report['grade'] = getGrade(potential, report['score'])
   report['letterGrade'] = getLetterGrade(report['score'])
 
-  if (create) { return createReport(report) }
+  if (create) { createReport(report) }
 
   return report
 }

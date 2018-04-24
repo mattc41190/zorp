@@ -29,6 +29,7 @@
   "author": "Matthew Cale",
   "license": "ISC",
   "dependencies": {
+    "lodash.isequal": "^4.5.0",
     "pug": "^2.0.3"
   },
   "devDependencies": {
