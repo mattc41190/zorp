@@ -2,4 +2,5 @@
 reporter/index.html
 node_modules
 coverage
-conf
+conf.js
+build

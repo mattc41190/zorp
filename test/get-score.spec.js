@@ -1,6 +1,6 @@
 const expect = require('chai').expect
 const mock = require('mock-fs')
-const getScore = require('../app/get-score')
+const getScore = require('../lib/api/get-score')
 const data = require('./fixtures/get-score/get-score.data')
 const mocks = require('./fixtures/get-score/get-score.mocks')
 

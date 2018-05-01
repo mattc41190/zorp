@@ -1,12 +1,7 @@
-const ipc = require('electron').ipcRenderer
+const Chart = require('chart.js').Chart
 
-setInterval(function() {
-  ipc.send('refresh')
-}, 5000)
-
-ipc.on('report', (event, report) => {
-  const ctx = document.querySelector('.chart').getContext('2d')
-  new Chart(ctx, {
+const createChart = function createChart(report, ctx) {
+  return new Chart(ctx, { // eslint-disable-line 
     type: 'doughnut',
     data: {
       labels: [
@@ -24,6 +19,7 @@ ipc.on('report', (event, report) => {
       ]
     },
     options: {
+      animation: false,
       legend: {
         labels: {
           fontColor: 'white'
@@ -31,4 +27,6 @@ ipc.on('report', (event, report) => {
       }
     }
   })
-})
+}
+
+module.exports = createChart

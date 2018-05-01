@@ -1,0 +1,26 @@
+main.js
+package.json
+readme.md
+.gitignore
+conf.js
+*- resources
+*- client
+*-- styles
+*-- scripts
+*-- views
+*- lib
+--- report.js
+*-- api
+--- *.js
+*-- build 
+*-- client
+*--- styles
+*--- scripts
+*--- views
+*- lib
+--- report.js
+*-- api
+--- *.js
+
+
+

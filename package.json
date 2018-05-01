@@ -2,19 +2,22 @@
   "name": "zorp",
   "version": "1.0.0",
   "description": "Tags that help you organize it",
-  "main": "bin/main.js",
-  "bin": "bin/main.js",
+  "main": "main.js",
+  "bin": "main.js",
   "standard": {
     "env": [
       "mocha"
     ]
   },
   "scripts": {
-    "start": "electron .",
+    "build": "gulp build",
+    "clean": "rm -rf coverage && rm -rf .nyc_output && rm -rf build",
+    "start": "npm run build && electron .",
     "test": "npm run lint && npm run unit",
     "lint": "standard",
     "format": "standard --fix",
-    "unit": "nyc --reporter=html mocha",
+    "unit": "nyc mocha",
+    "coverage": "nyc --reporter=html mocha",
     "patch": "npm version patch && npm publish",
     "minor": "npm version minor && npm publish",
     "major": "npm version major && npm publish"
@@ -29,15 +32,22 @@
   "author": "Matthew Cale",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^2.7.2",
     "lodash.isequal": "^4.5.0",
     "pug": "^2.0.3"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "electron": "^1.8.4",
+    "gulp": "^3.9.1",
+    "gulp-pug": "^4.0.1",
+    "gulp-stylus": "^2.7.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.1",
     "mocha": "^5.1.0",
     "mock-fs": "^4.4.2",
     "nyc": "^11.6.0",
+    "pump": "^3.0.0",
     "standard": "^11.0.1"
   }
 }
